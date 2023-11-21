@@ -10,7 +10,7 @@ from sqlalchemy import Uuid
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.orm import mapped_column
 
-from order_service.app.src.database import Base
+from .base import Base
 
 
 class OrderStatus(Enum):
@@ -24,7 +24,7 @@ class Product(Base):
     """Product model."""
     __tablename__ = 'product'
 
-    id: Mapped[uuid] = mapped_column(primary_key=True, index=True)
+    # id: Mapped[uuid] = mapped_column(primary_key=True, index=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
     price: Mapped[float] = mapped_column(Float, nullable=False)
     description: Mapped[str]
@@ -35,8 +35,8 @@ class Order(Base):
     """Order model."""
     __tablename__ = 'order'
 
-    id: Mapped[uuid] = mapped_column(primary_key=True, index=True)
-    user_id: Mapped[uuid] = mapped_column(nullable=False)
+    # id: Mapped[uuid] = mapped_column(primary_key=True, index=True)
+    user_id: Mapped[int] = mapped_column(nullable=False)
     status: Mapped[OrderStatus] = mapped_column(default=OrderStatus.PENDING)
     amount: Mapped[float]
     created_at: Mapped[datetime]
@@ -46,11 +46,11 @@ class Order(Base):
 
 class OrderItems(Base):
     """OrderItems model."""
-    __tablename__ = 'order_items'
+    __tablename__ = 'order_item'
 
-    id: Mapped[uuid] = mapped_column(primary_key=True, index=True)
-    order_id: Mapped[uuid] = mapped_column(ForeignKey('order.id'))
-    product_id: Mapped[uuid] = mapped_column(ForeignKey('product.id'))
+    # id: Mapped[uuid] = mapped_column(primary_key=True, index=True)
+    order_id: Mapped[int] = mapped_column(ForeignKey('order.id'))
+    product_id: Mapped[int] = mapped_column(ForeignKey('product.id'))
     quantity: Mapped[int] = mapped_column(Integer, nullable=False)
 
     product: Mapped['Product'] = relationship(back_populates='order_items')
