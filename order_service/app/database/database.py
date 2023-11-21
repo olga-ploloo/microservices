@@ -1,24 +1,9 @@
-import asyncio
-import uuid
 from asyncio import current_task
-from collections.abc import AsyncGenerator
-
-from sqlalchemy import create_engine, exc
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, AsyncEngine, async_sessionmaker, \
     async_scoped_session
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, DeclarativeBase, Mapped, mapped_column, declared_attr
-import os
 
-# DATABASE_URL = "sqlite+aiosqlite:///./order_service.sqlite3"
-DATABASE_URL = "postgresql+asyncpg://postgres:postgres@localhost/order_service"
+from order_service.app.core.config import settings
 
-
-#
-# engine = create_async_engine(DATABASE_URL,
-#                              echo=True)
-
-# SessionLocal = async_sessionmaker(engine)
 
 class DatabaseHelper:
     def __init__(self, url: str, echo: bool = False):
@@ -40,6 +25,4 @@ class DatabaseHelper:
             await session.close()
 
 
-
-db_helper = DatabaseHelper(url=DATABASE_URL, echo=True)
-
+db_helper = DatabaseHelper(url=settings.db_url, echo=True)
