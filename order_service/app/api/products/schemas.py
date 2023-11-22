@@ -7,9 +7,18 @@ class ProductBase(BaseModel):
     description: str
     stock_quantity: bool
 
-class ProductCreate(BaseModel):
+
+class ProductCreate(ProductBase):
     pass
 
-class Product(ProductBase):
+
+class ProductSchema(ProductBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
+
+
+class ProductUpdate(ProductBase):
+    name: str | None = None
+    price: float | None = None
+    description: str | None = None
+    stock_quantity: bool | None = None

@@ -30,6 +30,8 @@ class Product(Base):
     description: Mapped[str]
     stock_quantity: Mapped[bool] = mapped_column(default=False)
 
+    order_items: Mapped[list['OrderItems']] = relationship(back_populates='product')
+
 
 class Order(Base):
     """Order model."""
