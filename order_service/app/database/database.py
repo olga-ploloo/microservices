@@ -19,10 +19,19 @@ class DatabaseHelper:
                                        scopefunc=current_task)
         return session
 
-    async def session_dependency(self):
+    async def session_dependency(self) -> AsyncSession:
+        """Create session for every request."""
         async with self.session_factory() as session:
+            # use yield in order not to close session after leave the context
             yield session
             await session.close()
+
+    async def scope_session_dependency(self) -> AsyncSession:
+        """Create session with a limited scope.Enable sharing within a current task"""
+        session = self.get_scope_session()
+        # use yield in order not to close session after leave the context
+        yield session
+        await session.close()
 
 
 db_helper = DatabaseHelper(url=settings.db_url, echo=True)
