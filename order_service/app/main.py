@@ -1,7 +1,5 @@
 from contextlib import asynccontextmanager
 
-from database.base import Base
-from database.database import db_helper
 import uvicorn
 from fastapi import FastAPI
 from api import router as api_router
@@ -13,10 +11,6 @@ from order_service.app.core.config import settings
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # executed before the application starts up.
-    async with db_helper.engine.begin() as conn:
-        #         # await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.create_all)
-        print('Init db done')
     yield
     # executed after the application finishes handling requests
 
