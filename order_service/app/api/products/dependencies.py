@@ -4,7 +4,7 @@ from fastapi import Depends, Path, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from order_service.app.api.products import crud
-from order_service.app.database import Product
+from order_service.app.models import Product
 from order_service.app.database.database import db_helper
 
 

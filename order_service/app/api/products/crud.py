@@ -2,14 +2,13 @@ from sqlalchemy import select, Result
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .schemas import ProductCreate, ProductUpdate
-from order_service.app.database import Product
+from order_service.app.models import Product
 
 
 async def get_products(session: AsyncSession) -> list[Product]:
     stmt = select(Product).order_by(Product.id)
     result: Result = await session.execute(stmt)
     products = result.scalars().all()
-    print(products)
     return list(products)
 
 async def get_product(session: AsyncSession,

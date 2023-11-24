@@ -5,7 +5,7 @@ from . import crud
 from .dependencies import get_product_by_id
 from .schemas import ProductCreate, ProductSchema, ProductUpdate
 from order_service.app.database.database import db_helper
-from order_service.app.database import Product
+from order_service.app.models import Product
 
 router = APIRouter(tags=['Products'])
 
