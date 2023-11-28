@@ -25,15 +25,25 @@ class DatabaseHelper:
         """Create session for every request."""
         async with self.session_factory() as session:
             # use yield in order not to close session after leave the context
-            yield session
-            await session.close()
+            try:
+                yield session
+                await session.commit()
+            except exc.SQLAlchemyError as error:
+                await session.rollback()
+                print(error)
+                raise
 
     async def scope_session_dependency(self) -> AsyncSession:
         """Create session with a limited scope.Enable sharing within a current task"""
         session = self.get_scope_session()
         # use yield in order not to close session after leave the context
-        yield session
-        await session.close()
+        try:
+            yield session
+            await session.commit()
+        except exc.SQLAlchemyError as error:
+            await session.rollback()
+            print(error)
+            raise
 
 
 db_helper = DatabaseHelper(url=settings.db.url, echo=settings.db.echo)
