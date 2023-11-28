@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
 from api import router as api_router
-from order_service.app.core.config import settings
+from shop_service.app.core.config import settings
 
 
 #

@@ -1,8 +1,10 @@
 from asyncio import current_task
+
+from sqlalchemy import exc
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, AsyncEngine, async_sessionmaker, \
     async_scoped_session
 
-from order_service.app.core.config import settings
+from shop_service.app.core.config import settings
 
 
 class DatabaseHelper:

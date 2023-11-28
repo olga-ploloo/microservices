@@ -9,7 +9,7 @@ from sqlalchemy.orm import mapped_column
 from .base import Base
 
 if TYPE_CHECKING:
-    from .product import Product
+    from .order_product_association import OrderProductAssociation
 
 
 class OrderStatus(Enum):
@@ -29,3 +29,5 @@ class Order(Base):
     promocode: Mapped[str | None]
 
     products: Mapped[list['Product']] = relationship(secondary='order_product_association')
+
+    # products: Mapped[list['Product']] = relationship(secondary='order_product_association')

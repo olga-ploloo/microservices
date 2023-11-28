@@ -2,7 +2,7 @@ from sqlalchemy import select, Result
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .schemas import ProductCreate, ProductUpdate
-from order_service.app.models import Product
+from shop_service.app.models import Product
 
 
 async def get_products(session: AsyncSession) -> list[Product]:
