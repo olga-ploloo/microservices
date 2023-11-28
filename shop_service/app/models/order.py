@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from .order_product_association import OrderProductAssociation
 
 
-class OrderStatus(Enum):
+class OrderStatus(str, Enum):
     PENDING = 'pending'
     PROCESSING = 'processing'
     SHIPPED = 'shipped'
@@ -23,11 +23,11 @@ class Order(Base):
     """Order model."""
 
     status: Mapped[OrderStatus] = mapped_column(default=OrderStatus.PENDING)
-    amount: Mapped[float]
+    amount: Mapped[float] = mapped_column(default=0, server_default="0")
     created_at: Mapped[datetime] = mapped_column(server_default=func.now(),
                                                  default=datetime.now)
     promocode: Mapped[str | None]
 
-    products: Mapped[list['Product']] = relationship(secondary='order_product_association')
+    products_details: Mapped[list["OrderProductAssociation"]] = relationship(back_populates="order")
 
     # products: Mapped[list['Product']] = relationship(secondary='order_product_association')
