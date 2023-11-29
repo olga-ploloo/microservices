@@ -1,18 +1,19 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from . import services
-from .schemas import OrderSchema, OrderCreate, NewOrderSchema
+from . import crud
+from .schemas import OrderSchema, OrderCreate
 from shop_service.app.database.database import db_helper
-from ..products.dependencies import get_product_by_id
-from ...models import Product
+from shop_service.app.api.products.dependencies import get_product_by_id
+
+from shop_service.app.models import Product
 
 router = APIRouter(tags=['Orders'])
 
 
 @router.get('/', response_model=list[OrderSchema])
 async def get_orders_with_products(session: AsyncSession = Depends(db_helper.session_dependency)):
-    return await services.get_orders_with_products(session=session)
+    return await crud.get_orders_with_products(session=session)
 
 
 # @router.get('/{product_id}/', response_model=ProductSchema)
@@ -20,18 +21,20 @@ async def get_orders_with_products(session: AsyncSession = Depends(db_helper.ses
 #     return product
 #
 #
-@router.post('/{product_id}{count}', response_model=OrderSchema, status_code=status.HTTP_201_CREATED)
-async def create_order(product: Product = Depends(get_product_by_id),
-                       count: int,
-                         session: AsyncSession = Depends(db_helper.session_dependency)):
-    return await services.create_order(session=session,
-                                     product=product)
+@router.post('/', response_model=OrderSchema, status_code=status.HTTP_201_CREATED)
+async def create_order(new_order: OrderCreate,
+                       product: Product = Depends(get_product_by_id),
+                       session: AsyncSession = Depends(db_helper.session_dependency)):
+    return await crud.create_order(session=session,
+                                       new_order=new_order,
+                                       product=product)
 
-@router.post('/add_product', response_model=OrderSchema, status_code=status.HTTP_201_CREATED)
-async def add_product(new_order: OrderCreate,
-                         session: AsyncSession = Depends(db_helper.session_dependency)):
-    return await services.create_order(session=session,
-                                     new_order=new_order)
+
+# @router.post('/add_product', response_model=OrderSchema, status_code=status.HTTP_201_CREATED)
+# async def add_product(new_order: OrderCreate,
+#                       session: AsyncSession = Depends(db_helper.session_dependency)):
+#     return await services.create_order(session=session,
+#                                        new_order=new_order)
 #
 #
 # @router.patch('/{product_id}/')
