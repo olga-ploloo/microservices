@@ -144,7 +144,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "idna"
-version = "3.4"
+version = "3.6"
 description = "Internationalized Domain Names in Applications (IDNA)"
 category = "main"
 optional = false
@@ -231,6 +231,21 @@ python-versions = ">=3.8"
 
 [package.extras]
 cli = ["click (>=5.0)"]
+
+[[package]]
+name = "redis"
+version = "5.0.1"
+description = "Python client for Redis database and key-value store"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+async-timeout = {version = ">=4.0.2", markers = "python_full_version <= \"3.11.2\""}
+
+[package.extras]
+hiredis = ["hiredis (>=1.0.0)"]
+ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==20.0.1)", "requests (>=2.26.0)"]
 
 [[package]]
 name = "sniffio"
@@ -336,7 +351,7 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "0d3d827d9141d90805e2d825206fcdeb00e442475d8db6055ada72a74ba1a948"
+content-hash = "382ad19f71aec414e17a2ca3927414ba8efcfe76b447461ececcffb2c621578f"
 
 [metadata.files]
 aiosqlite = []
@@ -359,6 +374,7 @@ pydantic = []
 pydantic-core = []
 pydantic-settings = []
 python-dotenv = []
+redis = []
 sniffio = []
 sqlalchemy = []
 starlette = []
