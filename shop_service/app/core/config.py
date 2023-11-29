@@ -19,9 +19,18 @@ class DBSettings(BaseModel):
     #
     # model_config = SettingsConfigDict(env_file=".env")
 
+
+class RedisSettings(BaseModel):
+    host: str = 'localhost'
+    port: int = 6379
+    db: int = 1
+
+
 class Settings(BaseSettings):
     api_prefix: str = '/api'
     db: DBSettings = DBSettings()
+    redis: RedisSettings = RedisSettings()
+    expired_time: int = 24 * 3600
 
 
 settings = Settings()
