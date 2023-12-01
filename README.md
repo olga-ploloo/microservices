@@ -1,6 +1,6 @@
 # FastAPI Online Shop 
 
-This project is an online shop built using Python 3, FastAPI, SQLAlchemy 2.0, Redis, and RabbitMQ. It includes microservices for user authorization, order creation, and online payment.
+This project is an online shop built using Python 3, FastAPI, SQLAlchemy 2.0, Redis, and RabbitMQ. It includes microservices for order creation and online payment.
 
 ## Features
 
