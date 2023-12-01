@@ -11,7 +11,7 @@ from shop_service.app.database.database import db_helper
 async def get_product_by_id(product_id: Annotated[int, Path],
                             session: AsyncSession = Depends(db_helper.session_dependency)) -> Product:
     product = await crud.get_product(session=session,
-                                          product_id=product_id)
+                                     product_id=product_id)
     if product is not None:
         return product
 
